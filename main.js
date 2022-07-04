@@ -51,14 +51,17 @@ function ballCollideWithBrick(ball, brick){
 
 class Brick{
     constructor(position){
+        this.image = new Image()
+        this.image.src = './assets/images/brick.png'
         this.width = 60
         this.height = 15
         this.position = position
     }
 
     draw(ctx){
-        ctx.fillStyle = 'brown'
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        // ctx.fillStyle = 'brown'
+        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -216,6 +219,9 @@ class Game{
 
         this.bricks.forEach((brick, index) => {
             if(ballCollideWithBrick(this.ball, brick)){
+                const sound = new Audio()
+                sound.src = './assets/sounds/pumpkin_break_01.ogg'
+                sound.play()
                 this.ball.speed.y *= -1
                 this.score += 10
                 this.bricks.splice(index, 1)
